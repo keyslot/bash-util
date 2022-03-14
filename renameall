@@ -2,8 +2,8 @@
 new_name=$1
 except=$2
 if [ -z $new_name ];then 
-	#echo "Info: You are here $(pwd), all files can be renamed using a prefix" 
-	echo "Use:" $0 "new_name_files opt_except_regex"
+	echo "Info: You are here $(pwd), all files can be renamed using the prefix: new_name_COUNTER.ext" 
+	echo "Use:" $0 "new_name optional_arg_regex (Except these files) "
 	exit
 fi
 if [[ -z $except ]];then
@@ -12,9 +12,7 @@ fi
 i=0;
 total=$(ls *|wc -l)
 read -r -p "Rename $total files? y/n " b;
-if [[ $b =~ N|n|^$ ]];then
-	echo "Not problem";
-else
+if [[ $b =~ y|Y ]];then
 	for x in *
 	do 	
 		if [[ $x =~ $except ]];then
@@ -24,6 +22,12 @@ else
 		i=$(($i + 1))
 		mv -v "$x" "$new_name"'_'$i.${x##*.}
 	done
+else
+	echo "Not problem";
 fi
+unset new_name;
+unset except;
+unset i;
+unset total;
 echo "bye"
 
