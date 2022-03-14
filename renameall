@@ -1,0 +1,29 @@
+#!/bin/bash
+new_name=$1
+except=$2
+if [ -z $new_name ];then 
+	#echo "Info: You are here $(pwd), all files can be renamed using a prefix" 
+	echo "Use:" $0 "new_name_files opt_except_regex"
+	exit
+fi
+if [[ -z $except ]];then
+	except=('\');
+fi
+i=0;
+total=$(ls *|wc -l)
+read -r -p "Rename $total files? y/n " b;
+if [[ $b =~ N|n|^$ ]];then
+	echo "Not problem";
+else
+	for x in *
+	do 	
+		if [[ $x =~ $except ]];then
+		   echo SKIP ---\>$ix
+		   continue
+		fi
+		i=$(($i + 1))
+		mv -v "$x" "$new_name"'_'$i.${x##*.}
+	done
+fi
+echo "bye"
+

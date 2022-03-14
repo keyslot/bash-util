@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "Disabling internal keyboard"
+keyboard=$(xinput list|grep -E "AT Translated Set 2 keyboard"|grep -o -e "id=[0-9]*"|grep -o -e "[0-9]*");xinput float $keyboard;unset keyboard;
+echo "ok";
+exit;
